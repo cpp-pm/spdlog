@@ -5,6 +5,11 @@ cmake_minimum_required(VERSION 3.10...3.21)
 # ---------------------------------------------------------------------------------------
 # Start spdlog project
 # ---------------------------------------------------------------------------------------
+include("cmake/HunterGate.cmake")
+HunterGate(
+    URL "https://github.com/cpp-pm/hunter/archive/v0.25.0.tar.gz"
+    SHA1 "a1296b351dbfaf036c92d85c1bdb461f615849fa"
+)
 include(cmake/utils.cmake)
 include(cmake/ide.cmake)
 
@@ -210,6 +215,7 @@ target_link_libraries(spdlog_header_only INTERFACE Threads::Threads)
 # ---------------------------------------------------------------------------------------
 if(SPDLOG_FMT_EXTERNAL OR SPDLOG_FMT_EXTERNAL_HO)
     if(NOT TARGET fmt::fmt)
+        hunter_add_package(fmt)
         find_package(fmt CONFIG REQUIRED)
     endif()
     target_compile_definitions(spdlog PUBLIC SPDLOG_FMT_EXTERNAL)
